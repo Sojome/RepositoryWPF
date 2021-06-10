@@ -32,8 +32,8 @@ namespace WpfAlu
         TotalVenta _en = new TotalVenta();
         VentasBL _bl = new VentasBL();
 
-        IRepository Repository = new Modelo.Repository();
-        //IUnitOfWork Repository = new Modelo.RepositoryUoW();
+        //IRepository Repository = new Modelo.Repository();
+        IUnitOfWork Repository = new Modelo.RepositoryUoW();
 
         private void btnMostrar_Click(object sender, RoutedEventArgs e)
         {
@@ -41,7 +41,7 @@ namespace WpfAlu
             {                
                 _en.Nombre = txtmostrar.Text;
                 dgdatos.ItemsSource = _bl.MostrarVentasPorNombre(_en);
-                //Repository.Save();
+                Repository.Save();
             }
         }
 
@@ -68,6 +68,7 @@ namespace WpfAlu
                         Repository.Delete(new TotalVenta { id = _en.id });
                         dgdatos.Items.Refresh();
                         dgdatos.ItemsSource = _bl.MostrarVentas();
+                        Repository.Save();
                     }
                     catch (Exception)
                     {
@@ -111,7 +112,7 @@ namespace WpfAlu
                     MessageBox.Show("No se pudo modificar...", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                //Repository.Save();
+                Repository.Save();
                 
             }
             else

@@ -29,8 +29,8 @@ namespace WpfAlu
         }
 
 
-        IRepository Repository = new Modelo.Repository();
-        //IUnitOfWork Repository = new Modelo.RepositoryUoW();
+        //IRepository Repository = new Modelo.Repository();
+        IUnitOfWork Repository = new Modelo.RepositoryUoW();
 
         private void Limpiar()
         {
@@ -59,7 +59,7 @@ namespace WpfAlu
                             Estado = txtestado.Text
                         });
 
-                        //Repository.Save();
+                        Repository.Save();
 
                         MessageBox.Show("Los datos se guardaron corretamente...", "Exito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                         Limpiar();
