@@ -101,6 +101,7 @@ namespace WpfAlu
                     UpdateID.Total_ventas = Convert.ToInt64(txtventas.Text);
                     UpdateID.Estado = txtestado.Text;
                     Repository.Update(UpdateID);
+                    Repository.Save();
 
                     MessageBox.Show("El registro se modificó correctamente...", "Éxito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     dgdatos.Items.Refresh();
@@ -110,9 +111,7 @@ namespace WpfAlu
                 {
                     MessageBox.Show("No se pudo modificar...", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                Repository.Save();
-                
+                                
             }
             else
             {
