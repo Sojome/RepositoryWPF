@@ -65,9 +65,11 @@ namespace WpfAlu
                     try
                     {
                         Repository.Delete(new TotalVenta { id = _en.id });
+                        Repository.Save();
+
+                        MessageBox.Show("Los datos se han eliminado corretamente...", "Exito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                         dgdatos.Items.Refresh();
                         dgdatos.ItemsSource = _bl.MostrarVentas();
-                        Repository.Save();
                     }
                     catch (Exception)
                     {
