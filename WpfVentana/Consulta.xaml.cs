@@ -41,7 +41,6 @@ namespace WpfAlu
             {                
                 _en.Nombre = txtmostrar.Text;
                 dgdatos.ItemsSource = _bl.MostrarVentasPorNombre(_en);
-                Repository.Save();
             }
         }
 
