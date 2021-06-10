@@ -32,5 +32,25 @@ namespace Modelo
             _conn.Close();
             return Lista;
         }
+        public List<TotalVenta> MostrarVentas()
+        {
+            IDbConnection _conn = DBComon.Conexion();
+            _conn.Open();
+            SqlCommand _Command = new SqlCommand("CONSULTAR_VENTAS", _conn as SqlConnection);
+            _Command.CommandType = CommandType.StoredProcedure;
+            IDataReader _reader = _Command.ExecuteReader();
+            List<TotalVenta> Lista = new List<TotalVenta>();
+            while (_reader.Read())
+            {
+                TotalVenta _ventas = new TotalVenta();
+                _ventas.id = _reader.GetInt64(0);
+                _ventas.Nombre = _reader.GetString(1);
+                _ventas.Total_ventas = _reader.GetInt64(2);
+                _ventas.Estado = _reader.GetString(3);
+                Lista.Add(_ventas);
+            }
+            _conn.Close();
+            return Lista;
+        }
     }
 }

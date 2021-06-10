@@ -50,16 +50,23 @@ namespace WpfAlu
                 }
                 else
                 {
-                    Repository.Create(new TotalVenta {
-                        Nombre = txtnombre.Text,
-                        Total_ventas = Convert.ToInt64(txtventas.Text),
-                        Estado = txtestado.Text
-                    });
+                    try
+                    {
+                        Repository.Create(new TotalVenta
+                        {
+                            Nombre = txtnombre.Text,
+                            Total_ventas = Convert.ToInt64(txtventas.Text),
+                            Estado = txtestado.Text
+                        });
 
-                    //Repository.Save();
+                        //Repository.Save();
 
-                    MessageBox.Show("Los datos se guardaron corretamente...", "Exito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    Limpiar();
+                        MessageBox.Show("Los datos se guardaron corretamente...", "Exito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        Limpiar();
+                    }catch(Exception)
+                    {
+                        MessageBox.Show("Los datos no se guardaron", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch

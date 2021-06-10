@@ -47,13 +47,13 @@ namespace WpfAlu
 
         private void dgdatos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*_en = dgdatos.SelectedItem as Ventas;
+            _en = dgdatos.SelectedItem as TotalVenta;
             if (_en != null)
             {
                 txtnombre.Text = _en.Nombre;
-                txtventas.Text = Convert.ToString(_en.TotalVentas);
+                txtventas.Text = Convert.ToString(_en.Total_ventas);
                 txtestado.Text = _en.Estado;
-            }*/
+            }
         }
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
@@ -63,9 +63,16 @@ namespace WpfAlu
                 MessageBoxResult r = MessageBox.Show("Estas seguro eliminar este registro?", "Alerta!", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (r == MessageBoxResult.OK)
                 {
-                    /*_bl.Eliminar(_en);
-                    dgdatos.Items.Refresh();
-                    dgdatos.ItemsSource = _bl.MostrarVentas();*/
+                    try
+                    {
+                        Repository.Delete(new TotalVenta { id = _en.id });
+                        dgdatos.Items.Refresh();
+                        dgdatos.ItemsSource = _bl.MostrarVentas();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error al utilizar el metodo de eliminar", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 if (r == MessageBoxResult.Cancel)
                 {
@@ -87,33 +94,25 @@ namespace WpfAlu
         {
             if (txtnombre.Text != "" && txtventas.Text != "" && txtestado.Text != "")
             {
-                /*_en.Nombre = txtnombre.Text;
-                _en.TotalVentas = Convert.ToInt64(txtventas.Text);
-                _en.Estado = txtestado.Text;*/
-
-                Repository.Update(new TotalVenta
+                try
                 {
-                    Nombre = txtnombre.Text,
-                    Total_ventas = Convert.ToInt64(txtventas.Text),
-                    Estado = txtestado.Text
-                });
+                    var UpdateID = Repository.FindEntity<TotalVenta>(p => p.id == _en.id);
+                    UpdateID.Nombre = txtnombre.Text;
+                    UpdateID.Total_ventas = Convert.ToInt64(txtventas.Text);
+                    UpdateID.Estado = txtestado.Text;
+                    Repository.Update(UpdateID);
 
-                MessageBox.Show("El registro se modificó correctamente...", "Éxito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                dgdatos.Items.Refresh();
-
-                //Repository.Save();
-                /*
-                if (_bl.ModificarVentas(_en) > 0)
-                {
                     MessageBox.Show("El registro se modificó correctamente...", "Éxito!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     dgdatos.Items.Refresh();
                     dgdatos.ItemsSource = _bl.MostrarVentas();
                 }
-                else
+                catch(Exception)
                 {
                     MessageBox.Show("No se pudo modificar...", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                }*/
+                }
 
+                //Repository.Save();
+                
             }
             else
             {
